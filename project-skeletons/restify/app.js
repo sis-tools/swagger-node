@@ -1,13 +1,13 @@
 'use strict';
 
-var SwaggerRestify = require('swagger-restify-mw');
-var restify = require('restify');
-var app = restify.createServer();
+const SwaggerRestify = require('swagger-restify-mw');
+const restify = require('restify');
+const app = restify.createServer();
 
 // export setup Promis for testing
 module.exports = new Promise(function (resolve, reject) {
 
-  var config = {
+  const config = {
     appRoot: __dirname // required config
   };
 
@@ -16,10 +16,12 @@ module.exports = new Promise(function (resolve, reject) {
 
     swaggerRestify.register(app);
 
-    var port = process.env.PORT || 10010;
+    const port = process.env.PORT || 10010;
+    const hostname = process.env.HOSTNAME || 'localhost';
+    
     app.listen(port, function () {
       if (swaggerRestify.runner.swagger.paths['/hello']) {
-        console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
+        console.log('try this:\ncurl http://' + hostname + ':' + port + '/hello?name=Scott');
       }
       resolve(app);
     });
